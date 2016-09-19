@@ -1,5 +1,12 @@
 Pikirasa
 ========
+
+1.0.5 release
+-------
+
+Supports encrypted string more than 117. see [openssl_private_encrypt can encrypt a maximum of 117 chars at one time](http://php.net/manual/zh/function.openssl-private-encrypt.php)
+
+
 Easy PKI public/private RSA key encryption using the OpenSSL extension.
 
 What's up with the name?
@@ -117,3 +124,17 @@ $data = 'abc123';
 $encrypted = $rsa->base64Encrypt($data);
 $decrypted = $rsa->base64Decrypt($encrypted);
 var_dump($decrypted); // 'abc123'
+```
+
+
+encrypt a maximum of 117 chars at one time
+
+```php
+$rsa = new Pikirasa\RSA($publicKey, $privateKey);
+
+$data = 'abc123';
+$encrypted = $rsa->base64EncryptForLongChars($data);
+$decrypted = $rsa->base64DecryptForLongChars($encrypted); // this is testing...
+var_dump($decrypted); // 'abc123'
+```
+
