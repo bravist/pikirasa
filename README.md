@@ -124,3 +124,17 @@ $data = 'abc123';
 $encrypted = $rsa->base64Encrypt($data);
 $decrypted = $rsa->base64Decrypt($encrypted);
 var_dump($decrypted); // 'abc123'
+```
+
+
+encrypt a maximum of 117 chars at one time
+
+```php
+$rsa = new Pikirasa\RSA($publicKey, $privateKey);
+
+$data = 'abc123';
+$encrypted = $rsa->base64EncryptForLongChars($data);
+$decrypted = $rsa->base64DecryptForLongChars($encrypted); // this is testing...
+var_dump($decrypted); // 'abc123'
+```
+
