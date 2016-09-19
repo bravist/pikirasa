@@ -110,4 +110,52 @@ class RSA
     {
         return $this->decrypt(base64_decode($data));
     }
+
+    /**
+     * Encrypt data and then base64_encode it for long chars
+     * http://php.net/manual/zh/function.openssl-private-encrypt.php
+     *
+     * @param string $data Data to encrypt
+     * @param int    $length split length
+     * @return string Base64-encrypted data
+     */
+    public function base64EncryptForLongChars($data, $length = 117)
+    {
+        if (strlen($data) < $length ) {
+            return $this->base64Encrypt($data);
+        }
+
+        $split = str_split($data, $length);
+
+        $encryptedData = '';
+        
+        foreach ($split as $part) {
+            $encryptedData .= $this->encrypt($part);
+        }
+        return base64_encode($encryptedData);
+    }
+
+
+    /**
+     * base64_decode data and then decrypt it
+     *
+     * @param string $data Base64-encoded data to decrypt
+     * @return string Decrypted data
+     */
+    public function base64DecryptForLongChars($data, $length = 172) {
+
+        if (strlen($data) < $length ) {
+            return $this->base64Decrypt($data);
+        }
+
+        $split = str_split(base64_decode($data), $length);
+
+        $originalData = '';
+
+        foreach ($split as $part) {
+            $originalData .= $this->decrypt($part);
+        }
+
+        return $originalData;
+    }
 }
